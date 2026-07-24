@@ -1,0 +1,86 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+.venv/
+venv/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Frontend
+node_modules/
+dist/
+*.log
+
+# Storage (uploaded files, previews)
+storage/
+
+# Report templates (contains real hospital PDF data)
+labreptemplate/
+
+# Temporary files
+*.tmp
+*.bak
+*.csv
+needs_reparse.txt
+trend_chart.png
+
+# Sensitive - contains API keys or credentials
+backend/restore_volc_key.py
+backend/test_ark_available_models.py
+backend/test_ark_api.py
+backend/test_ark_models.py
+backend/test_ai_endpoint.py
+backend/test_ai_recognize.py
+backend/test_ai_config.py
+backend/list_available_models.py
+backend/check_ai_config.py
+backend/update_ai_key.py
+
+# Debug scripts (optional, uncomment if you want to exclude)
+# backend/debug_*.py
+# backend/check_*.py
+# backend/fix_*.py
+# backend/reparse_*.py
+# backend/rescan_*.py
+# backend/verify_*.py
+# backend/find_*.py
+# backend/update_*.py
+# backend/render_*.py
+# backend/analyze_*.py
+# backend/list_*.py
+# backend/upload_*.py
+# backend/ocr_analyze.py
+# backend/init_db.py
+# backend/add_results_manually.py
+# backend/ai_enrich_labitem.py
+# backend/final_verify.py
+
+# Docker
+docker-compose.override.yml
+
+# Backup files
+*.bak
+*.old

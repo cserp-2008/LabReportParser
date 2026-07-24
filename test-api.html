@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabReportParser API 测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        button { background: #4CAF50; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        input { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LabReportParser API 测试</h1>
+        
+        <div class="section">
+            <h2>后端健康检查</h2>
+            <button onclick="testHealth()">测试</button>
+            <pre id="health-result"></pre>
+        </div>
+        
+        <div class="section">
+            <h2>登录测试 (admin/admin123)</h2>
+            <button onclick="testLogin()">登录</button>
+            <pre id="login-result"></pre>
+            <p>Token: <span id="token-display"></span></p>
+        </div>
+        
+        <div class="section">
+            <h2>获取当前用户信息</h2>
+            <button onclick="testMe()">获取用户信息</button>
+            <pre id="me-result"></pre>
+        </div>
+        
+        <div class="section">
+            <h2>获取检验项目列表</h2>
+            <button onclick="testTrendItems()">获取项目</button>
+            <pre id="trend-result"></pre>
+        </div>
+        
+        <div class="section">
+            <h2>获取报告列表</h2>
+            <button onclick="testReportList()">获取报告</button>
+            <pre id="report-result"></pre>
+        </div>
+    </div>
+
+    <script>
+        let token = '';
+
+        async function testHealth() {
+            try {
+                const response = await fetch('http://localhost:8000/health');
+                const data = await response.json();
+                document.getElementById('health-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('health-result').textContent = '错误: ' + error.message;
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                const data = await response.json();
+                document.getElementById('login-result').textContent = JSON.stringify(data, null, 2);
+                if (data.code === 0 && data.data) {
+                    token = data.data.access_token;
+                    document.getElementById('token-display').textContent = token.substring(0, 50) + '...';
+                }
+            } catch (error) {
+                document.getElementById('login-result').textContent = '错误: ' + error.message;
+            }
+        }
+
+        async function testMe() {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/auth/me', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                document.getElementById('me-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('me-result').textContent = '错误: ' + error.message;
+            }
+        }
+
+        async function testTrendItems() {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/trend/items', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                document.getElementById('trend-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('trend-result').textContent = '错误: ' + error.message;
+            }
+        }
+
+        async function testReportList() {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/report/list', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                document.getElementById('report-result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('report-result').textContent = '错误: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

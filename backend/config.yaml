@@ -1,0 +1,27 @@
+# 数据库配置
+database:
+  host: localhost
+  port: 3306
+  db_name: LabReport
+  user: root
+  password: root
+
+# Redis配置
+redis:
+  host: localhost
+  port: 6379
+  db: 0
+
+# 文件存储根路径
+storage_root: "../storage"
+cache_expire_days: 30
+auto_backup_time: "01:00"
+quality_score_threshold: 85
+
+# OCR配置
+ocr_thread_num: 4
+enable_ai_correct: true
+
+# 服务端口
+api_port: 8000
+ws_port: 8000
